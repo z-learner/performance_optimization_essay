@@ -8,12 +8,12 @@
 
 #include "benchmark/benchmark.h"
 
-std::array<float, 1L << 26> data{};  // 256M
+std::array<float, 1L << 26> data{};  // 64MB
 
 static void fetch_add_one(benchmark::State& state) {
   for (auto _ : state) {
     for (size_t index = 0; index < data.size(); ++index) {
-      data[index] += 1;
+      data[index] = 1;
     }
   }
   benchmark::DoNotOptimize(data);
@@ -36,7 +36,7 @@ static void calculate(benchmark::State& state) {
 BENCHMARK(calculate);
 
 static void calculate_parallel(benchmark::State& state) {
-  omp_set_num_threads(4);
+  omp_set_num_threads(8);
   for (auto _ : state) {
 #pragma omp parallel for
     for (size_t index = 0; index < data.size(); ++index) {

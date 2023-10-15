@@ -8,7 +8,7 @@
 
 #include "benchmark/benchmark.h"
 
-std::array<float, 1L << 26> data;  // 256M
+std::array<float, 1L << 26> data;  // 64MB
 
 static void fill(benchmark::State& state) {
   for (auto _ : state) {
